@@ -1,0 +1,28 @@
+{
+  "name": "devtalks.net.go",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/sporto/devtalks.net.go.git"
+  },
+  "author": "",
+  "license": "BSD",
+  "readmeFilename": "readme.md",
+  "gitHead": "974c5102b12e167a9623d3298b6cbb461adb063d",
+  "bugs": {
+    "url": "https://github.com/sporto/devtalks.net.go/issues"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-concat": "~0.3.0",
+    "grunt-contrib-uglify": "~0.2.4",
+    "grunt-contrib-jshint": "~0.6.4",
+    "grunt-reload": "~0.2.0",
+    "grunt-contrib-copy": "~0.4.1"
+  }
+}
