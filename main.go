@@ -5,7 +5,10 @@ import (
 	"fmt"
 	"github.com/gorilla/mux"
 	// "html/template"
+	"io/ioutil"
 	"net/http"
+
+	// "strings"
 )
 
 type Page struct {
@@ -33,8 +36,12 @@ func (r Response) String() (s string) {
 
 func homeHandler(w http.ResponseWriter, req *http.Request) {
 	fmt.Println("homeHandler")
-	fmt.Fprintf(w, "HomeHandler")
-	// http.FileServer(http.Dir("public/"))
+	filePath := "public/index.html"
+	content, err := ioutil.ReadFile(filePath)
+	if err != nil {
+
+	}
+	fmt.Fprintf(w, string(content))
 	return
 }
 
