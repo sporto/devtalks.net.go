@@ -34,6 +34,7 @@ func (r Response) String() (s string) {
 func homeHandler(w http.ResponseWriter, req *http.Request) {
 	fmt.Println("homeHandler")
 	fmt.Fprintf(w, "HomeHandler")
+	// http.FileServer(http.Dir("public/"))
 	return
 }
 
@@ -48,7 +49,6 @@ func staticHandler(w http.ResponseWriter, req *http.Request) {
 	fmt.Println("staticHandler")
 	http.ServeFile(w, req, req.URL.Path[1:])
 	// http.FileServer(http.Dir("public"))
-
 }
 
 func main() {
@@ -59,7 +59,9 @@ func main() {
 	r.HandleFunc("/", homeHandler)
 	r.HandleFunc("/api/v1/videos", jsonHandler)
 
-	http.Handle("/public/", http.StripPrefix("/public/", http.FileServer(http.Dir("public/"))))
+	// http.Handle("/public/", http.StripPrefix("/public/", http.FileServer(http.Dir("public/"))))
+
+	http.Handle("/", r)
 
 	err := http.ListenAndServe(":8090", nil)
 	fmt.Println(err)
