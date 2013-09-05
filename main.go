@@ -66,7 +66,7 @@ func main() {
 	r.HandleFunc("/", homeHandler)
 	r.HandleFunc("/api/v1/videos", jsonHandler)
 
-	// http.Handle("/public/", http.StripPrefix("/public/", http.FileServer(http.Dir("public/"))))
+	http.Handle("/public/", http.StripPrefix("/public/", http.FileServer(http.Dir("public/"))))
 
 	http.Handle("/", r)
 

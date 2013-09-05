@@ -1,11 +1,21 @@
 <html>
-<head>
-	<title>APP</title>
-</head>
-<body ng-app="APP">
-	<div ng-controller="videos.showCtrl">
+	<head>
+		<title>APP</title>
+	</head>
+	<body ng-app="APP">
+		View
+		<div ng-view></div>
 		
-	</div>
-	<script src="public/js/app.js"></script>
-</body>
+		<div ng-controller="SomeCtrl">
+			{{title}}
+		</div>
+
+		<script type="text/ng-template" id="/index.html">
+			This is video index
+			{{message}}
+		</script>
+
+		<script src="public/js/app.js"></script>
+
+	</body>
 </html>

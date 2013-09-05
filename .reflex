@@ -1,0 +1,7 @@
+# ~/GoDev/bin/reflex --config="reflex_config"
+
+# Restart server when ruby code changes
+-g "*.go" -s -- sh -c 'go run main.go'
+
+# Rebuild assets
+# -g "src/**/*.js" -c 'grunt'

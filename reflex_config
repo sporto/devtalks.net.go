@@ -1,0 +1,2 @@
+# Restart server when ruby code changes
+-g '*.go' -s -- sh -c 'go run main.go'

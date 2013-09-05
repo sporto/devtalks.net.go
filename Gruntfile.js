@@ -14,7 +14,7 @@ module.exports = function(grunt) {
 				separator: ';',
 			},
 			dist: {
-				src: ['src/js/lib/**/*.js', 'src/js/app/**/*.js'],
+				src: ['src/js/lib/angular.js', 'src/js/lib/**/*.js', 'src/js/app/**/*.js'],
 				dest: 'public/js/app.js',
 			},
 		},
@@ -43,9 +43,14 @@ module.exports = function(grunt) {
 		},
 
 		watch: {
-			files: ['main.go'],
-			tasks: ['reload']
-		}
+			scripts: {
+				files: ['src/index.html', 'src/**/*.js'],
+				tasks: ['build'],
+				options: {
+					spawn: false,
+				},
+			},
+		},
 
 	});
 
@@ -54,8 +59,10 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-copy');
+	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-reload');
 
+	grunt.registerTask('build', ['concat', 'copy']);
 	grunt.registerTask('default', ['jshint', 'concat', 'copy']);
 
 };
