@@ -34,9 +34,9 @@ func main() {
 	m.Use(render.Renderer(render.Options{
 		Layout: "layout",
 	}))
+	m.Use(martini.Static("assets"))
 
 	m.Get("/", func (ren render.Render, r * http.Request, db *sql.DB) {
-		// rw.Write([]byte("Hello world"))
 		rows, err := db.Query("SELECT * from videos")
 		PanicIf(err)
 		defer rows.Close()
