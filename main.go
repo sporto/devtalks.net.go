@@ -4,13 +4,39 @@ import (
 	"github.com/codegangsta/martini"
 	"net/http"
 	"fmt"
-	"github.com/lib/pq"
+	"database/sql"
+	_ "github.com/lib/pq"
+	// "github.com/coopernurse/gorp"
 )
+
+func SetupDB() *sql.DB {
+	db, err := sql.Open("postgres", "dbname=devtalks-dev sslmode=disable")
+	PanicIf(err)
+	return db
+}
+
+func PanicIf(err error){
+	if err != nil {
+		panic(err)
+	}
+}
 
 func main() {
 	m := martini.Classic()
-	m.Get("/", func (rw.= http.ResponseWriter, r * http.Request) {
-		rw.Write([]byte("Hello world"))
+	m.Map(SetupDB())
+
+	m.Get("/", func (rw http.ResponseWriter, r * http.Request, db *sql.DB) {
+		// rw.Write([]byte("Hello world"))
+		rows, err := db.Query("SELECT * from videos")
+		PanicIf(err)
+		defer rows.Close()
+
+		var id, title string
+		for rows.Next() {
+			err := rows.Scan(&id, &title)
+			PanicIf(err)
+			fmt.Fprintf(rw, "Title: %s", title)
+		}
 	})
 
 	m.Run()
