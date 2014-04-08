@@ -2,8 +2,10 @@ package main
 
 import (
 	"github.com/codegangsta/martini"
+	"github.com/martini-contrib/render"
+
 	"net/http"
-	"fmt"
+	// "fmt"
 	"database/sql"
 	_ "github.com/lib/pq"
 	// "github.com/coopernurse/gorp"
@@ -21,22 +23,34 @@ func PanicIf(err error){
 	}
 }
 
+type Video struct {
+	Id int64
+	Title string
+}
+
 func main() {
 	m := martini.Classic()
 	m.Map(SetupDB())
+	m.Use(render.Renderer(render.Options{
+		Layout: "layout",
+	}))
 
-	m.Get("/", func (rw http.ResponseWriter, r * http.Request, db *sql.DB) {
+	m.Get("/", func (ren render.Render, r * http.Request, db *sql.DB) {
 		// rw.Write([]byte("Hello world"))
 		rows, err := db.Query("SELECT * from videos")
 		PanicIf(err)
 		defer rows.Close()
 
-		var id, title string
+		videos := []Video{}
 		for rows.Next() {
-			err := rows.Scan(&id, &title)
+			v := Video{}
+			err := rows.Scan(&v.Id, &v.Title)
 			PanicIf(err)
-			fmt.Fprintf(rw, "Title: %s", title)
+			videos = append(videos, v)
+			// fmt.Fprintf(rw, "Title: %s", title)
 		}
+
+		ren.HTML(200, "videos", videos)
 	})
 
 	m.Run()
